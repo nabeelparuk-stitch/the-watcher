@@ -1,0 +1,23 @@
+{
+  "name": "the-watcher",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev -w @watcher/web",
+    "dev:api": "npm run dev -w @watcher/api",
+    "dev:worker": "npm run start -w @watcher/worker",
+    "build:web": "npm run build -w @watcher/web",
+    "build:api": "npm run build -w @watcher/api",
+    "db:start": "supabase start",
+    "db:reset": "supabase db reset",
+    "schedule:create": "npm run schedule:create -w @watcher/worker",
+    "checkout:venv": "cd apps/checkout-worker && python3 -m venv .venv",
+    "checkout:pip": "cd apps/checkout-worker && .venv/bin/pip install -r requirements.txt",
+    "checkout:playwright": "cd apps/checkout-worker && bash scripts/install-chromium.sh",
+    "checkout:install": "npm run checkout:venv && npm run checkout:pip && npm run checkout:playwright",
+    "dev:checkout": "cd apps/checkout-worker && .venv/bin/python -m watcher_checkout",
+    "checkout:schedule": "cd apps/checkout-worker && .venv/bin/python register_schedule.py"
+  }
+}

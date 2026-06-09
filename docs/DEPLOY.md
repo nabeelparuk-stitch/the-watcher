@@ -76,9 +76,13 @@ curl http://localhost:4000/health
 3. Framework: **Next.js** (auto-detected; `vercel.json` sets monorepo install/build).
 4. **Environment variables:**
 
-| Variable | Value |
-|----------|-------|
-| `NEXT_PUBLIC_API_URL` | Railway/Fly API URL, e.g. `https://the-watcher-api.up.railway.app` |
+| Variable | Required | Value |
+|----------|----------|-------|
+| `NEXT_PUBLIC_API_URL` | Yes | Railway/Fly API URL, e.g. `https://the-watcher-api.up.railway.app` |
+| `NEXT_PUBLIC_SUPABASE_URL` | Fleet only | `https://xxx.supabase.co` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Fleet only | Supabase anon key |
+
+The public checker (`/`) works without Supabase env vars. Fleet/login pages need them.
 
 5. Deploy. Open the Vercel URL and run a single-store check.
 

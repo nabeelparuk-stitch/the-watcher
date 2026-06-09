@@ -6,6 +6,7 @@ import {
   loadGoogleSheetsSettings,
   type GoogleSheetsSettings,
 } from "@/components/google-sheets-settings";
+import { ApiConnectionStatus } from "@/components/api-connection-status";
 import { ReportDetailCard } from "@/components/report-detail-card";
 import { runCheckoutReport } from "@/lib/checkout-api";
 import { normalizeStoreUrl, parseBulkUrls } from "@/lib/checkout-url";
@@ -202,6 +203,7 @@ export function CheckoutReportForm() {
 
   return (
     <div>
+      <ApiConnectionStatus />
       <div
         style={{
           display: "flex",

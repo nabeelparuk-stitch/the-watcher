@@ -25,14 +25,21 @@ export function loadEnv() {
   const supabaseAnonKey = process.env.SUPABASE_ANON_KEY?.trim() || null;
   const fleetEnabled = Boolean(supabaseUrl && supabaseAnonKey);
 
+  const corsRaw = process.env.CORS_ORIGIN ?? "http://localhost:3000";
+  const corsAllowAll =
+    process.env.CORS_ALLOW_ALL === "true" ||
+    corsRaw.trim() === "*" ||
+    corsRaw.split(",").some((s) => s.trim() === "*");
+
   return {
     port: Number(process.env.PORT ?? "4000"),
     supabaseUrl,
     supabaseAnonKey,
     fleetEnabled,
-    corsOrigins: (process.env.CORS_ORIGIN ?? "http://localhost:3000")
+    corsAllowAll,
+    corsOrigins: corsRaw
       .split(",")
       .map((s) => s.trim())
-      .filter(Boolean),
+      .filter((s) => s && s !== "*"),
   };
 }

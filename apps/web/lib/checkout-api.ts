@@ -41,12 +41,24 @@ export async function runCheckoutReport(
     ...(sheets ? sheetsPayload(sheets, appendToSheet) : {}),
   };
 
-  const res = await fetch(`${apiBaseUrl()}/v1/checkout-reports`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-    signal,
-  });
+  const apiUrl = apiBaseUrl();
+  let res: Response;
+  try {
+    res = await fetch(`${apiUrl}/v1/checkout-reports`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      signal,
+    });
+  } catch (e) {
+    const hint =
+      /localhost|127\.0\.0\.1/i.test(apiUrl)
+        ? " NEXT_PUBLIC_API_URL points to localhost — set your public Railway/Fly API URL on Vercel and redeploy."
+        : " Check the API is deployed, CORS_ALLOW_ALL=true on the API, and NEXT_PUBLIC_API_URL on Vercel.";
+    throw new Error(
+      `Could not reach the API at ${apiUrl}.${hint}`
+    );
+  }
 
   const data = (await res.json().catch(() => ({}))) as CheckoutReport & {
     error?: string;

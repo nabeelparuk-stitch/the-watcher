@@ -35,7 +35,8 @@ Fleet mode (Supabase auth, incidents) is optional. The **public checker** works 
 | Variable | Required | Example |
 |----------|----------|---------|
 | `PORT` | Auto-set by Railway | `4000` |
-| `CORS_ORIGIN` | Yes | `https://your-app.vercel.app` |
+| `CORS_ORIGIN` | Optional | `https://your-app.vercel.app` |
+| `CORS_ALLOW_ALL` | Easiest | `true` (allows any origin for public checker) |
 | `GOOGLE_SERVICE_ACCOUNT_JSON` | For Sheets | Paste JSON key on one line |
 | `GOOGLE_SHEETS_DEFAULT_SPREADSHEET_ID` | Optional | Your sheet ID |
 | `GOOGLE_SHEETS_DEFAULT_SHEET_NAME` | Optional | `Results` |

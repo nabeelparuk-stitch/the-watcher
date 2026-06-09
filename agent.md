@@ -216,6 +216,19 @@ Before claiming checkout detection works:
 
 ---
 
+## Deployment
+
+Production uses **two services**:
+
+- **Web** → Vercel (`apps/web`, set `NEXT_PUBLIC_API_URL`)
+- **API + Playwright** → Railway/Fly Docker (root `Dockerfile`, `railway.toml`)
+
+See **`docs/DEPLOY.md`** for env vars, CORS, Sheets JSON secret, and checklist.
+
+API boots without Supabase for public-checker-only deploy; fleet routes register only when `SUPABASE_URL` + `SUPABASE_ANON_KEY` are set.
+
+---
+
 ## Links
 
 - **Repo:** https://github.com/nabeelparuk-stitch/the-watcher

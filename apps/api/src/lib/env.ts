@@ -20,19 +20,16 @@ try {
   /* optional .env */
 }
 
-function requireEnv(name: string): string {
-  const v = process.env[name];
-  if (!v) {
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-  return v;
-}
-
 export function loadEnv() {
+  const supabaseUrl = process.env.SUPABASE_URL?.trim() || null;
+  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY?.trim() || null;
+  const fleetEnabled = Boolean(supabaseUrl && supabaseAnonKey);
+
   return {
     port: Number(process.env.PORT ?? "4000"),
-    supabaseUrl: requireEnv("SUPABASE_URL"),
-    supabaseAnonKey: requireEnv("SUPABASE_ANON_KEY"),
+    supabaseUrl,
+    supabaseAnonKey,
+    fleetEnabled,
     corsOrigins: (process.env.CORS_ORIGIN ?? "http://localhost:3000")
       .split(",")
       .map((s) => s.trim())

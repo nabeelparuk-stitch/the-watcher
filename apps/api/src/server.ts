@@ -30,20 +30,27 @@ async function main() {
     { prefix: "/v1" }
   );
 
-  await app.register(
-    async (v1) => {
-      registerV1Auth(v1, {
-        supabaseUrl: env.supabaseUrl,
-        supabaseAnonKey: env.supabaseAnonKey,
-      });
-      await v1.register(storesRoutes);
-      await v1.register(notificationChannelsRoutes);
-      await v1.register(alertRulesRoutes);
-      await v1.register(incidentsRoutes);
-      await v1.register(syntheticCheckoutConfigsRoutes);
-    },
-    { prefix: "/v1" }
-  );
+  if (env.fleetEnabled && env.supabaseUrl && env.supabaseAnonKey) {
+    const { supabaseUrl, supabaseAnonKey } = env;
+    await app.register(
+      async (v1) => {
+        registerV1Auth(v1, {
+          supabaseUrl,
+          supabaseAnonKey,
+        });
+        await v1.register(storesRoutes);
+        await v1.register(notificationChannelsRoutes);
+        await v1.register(alertRulesRoutes);
+        await v1.register(incidentsRoutes);
+        await v1.register(syntheticCheckoutConfigsRoutes);
+      },
+      { prefix: "/v1" }
+    );
+  } else {
+    app.log.warn(
+      "SUPABASE_URL / SUPABASE_ANON_KEY not set — fleet routes disabled; public checkout checker only."
+    );
+  }
 
   await app.listen({ port: env.port, host: "0.0.0.0" });
   app.log.info(`API listening on http://0.0.0.0:${env.port}`);

@@ -120,6 +120,19 @@ npm run dev:checkout
 
 Results are stored in `synthetic_checkout_runs` (`stitch_express_is_top`, `first_payment_method_text`). Failures can open `stitch_checkout` incidents and notify Slack when alert rules are configured.
 
+## Deploy (production)
+
+**Web** → [Vercel](https://vercel.com) (`apps/web`)  
+**API + Playwright** → [Railway](https://railway.app) or Fly.io (root `Dockerfile`)
+
+Step-by-step: **[docs/DEPLOY.md](docs/DEPLOY.md)**
+
+Quick summary:
+
+1. Deploy API from Docker (`railway.toml` included) — set `CORS_ORIGIN` and `GOOGLE_SERVICE_ACCOUNT_JSON`.
+2. Deploy web to Vercel with root `apps/web` — set `NEXT_PUBLIC_API_URL` to your API URL.
+3. Supabase is optional (public checker only); fleet mode needs Supabase env on both services.
+
 ## Project layout
 
 | Path | Role |
